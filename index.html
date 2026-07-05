@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyScripts | Dashboard Profesional</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Configuración de Tailwind para colores personalizados y fuentes -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6', // Blue 500
+                        secondary: '#06b6d4', // Cyan 500
+                        darkbg: '#0f172a',    // Slate 900
+                        cardbg: '#1e293b',    // Slate 800
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos Personalizados -->
+    <link rel="stylesheet" href="static/css/styles.css">
+
+    <!-- Inicializar tema oscuro por defecto antes de que se renderice la página -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme'))) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-darkbg text-slate-800 dark:text-slate-200 font-sans antialiased transition-colors duration-300 overflow-x-hidden selection:bg-primary selection:text-white">
+
+    <!-- Navbar Superior -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 border-b border-gray-200 dark:border-slate-800 bg-white/80 dark:bg-darkbg/80 backdrop-blur-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <i data-lucide="code-2" class="text-primary w-6 h-6"></i>
+                <span class="font-bold text-xl tracking-tight text-slate-800 dark:text-white">Py<span class="text-primary">Scripts</span></span>
+            </div>
+
+            <!-- Buscador -->
+            <div class="hidden md:flex relative group max-w-md flex-1 mx-8">
+                <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-slate-400 dark:text-slate-400"></i>
+                <input type="text" id="searchInput" placeholder="Buscar scripts, etiquetas..." 
+                       class="w-full bg-gray-100 dark:bg-slate-900/50 border border-gray-300 dark:border-slate-700 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-200 placeholder:text-slate-500">
+            </div>
+
+            <!-- Acciones Derecha -->
+            <div class="flex items-center gap-3">
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i> <!-- Luna para modo claro (clic = ir a oscuro) -->
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i> <!-- Sol para modo oscuro (clic = ir a claro) -->
+                </button>
+                <div class="h-6 w-px bg-gray-200 dark:bg-slate-700 mx-1"></div>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" class="w-8 h-8 rounded-full border border-gray-300 dark:border-slate-600 cursor-pointer hover:border-primary transition-colors">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="relative pt-32 pb-12 px-4 overflow-hidden">
+        <!-- Fondo decorativo (Glow) -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-800 dark:text-white mb-6 animate-fade-in-up delay-100">
+                Colección de Scripts en <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Python</span>
+            </h1>
+            
+            <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto animate-fade-in-up delay-200">
+                Panel centralizado para visualizar, ejecutar y gestionar herramientas desarrolladas en Python. Automatización, IA y más.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
+                <button onclick="document.getElementById('dashboard').scrollIntoView({behavior: 'smooth'})" 
+                        class="px-8 py-3 bg-primary hover:bg-blue-600 text-white rounded-lg font-medium transition-all shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)] flex items-center gap-2 group">
+                    Explorar Scripts
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <a href="#" class="px-8 py-3 bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700 border border-gray-300 dark:border-slate-700 text-slate-700 dark:text-white rounded-lg font-medium transition-all">
+                    Documentación
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Principal -->
+    <main id="dashboard" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        
+        <!-- Estadísticas (Stats) -->
+        <section id="statsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 animate-fade-in-up delay-400">
+            <!-- Se llena con JS -->
+        </section>
+
+        <!-- Filtros y Ordenamiento -->
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8 sticky top-[72px] z-40 bg-gray-50/95 dark:bg-darkbg/95 backdrop-blur-sm py-4 border-b border-gray-200 dark:border-slate-800">
+            <!-- Categorías -->
+            <div class="flex flex-wrap gap-2" id="categoryFilters">
+                <!-- Se llena con JS -->
+            </div>
+
+            <!-- Ordenamiento y Buscador Móvil -->
+            <div class="flex items-center gap-3 w-full lg:w-auto">
+                <div class="md:hidden relative flex-1">
+                    <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-slate-400 dark:text-slate-400"></i>
+                    <input type="text" id="mobileSearchInput" placeholder="Buscar..." 
+                           class="w-full bg-gray-100 dark:bg-slate-900/50 border border-gray-300 dark:border-slate-700 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-primary">
+                </div>
+
+                <select id="sortSelect" class="bg-gray-100 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm rounded-lg px-3 py-2 focus:ring-primary focus:border-primary outline-none cursor-pointer hover:bg-gray-200 dark:hover:bg-slate-750">
+                    <option value="date_desc">Más recientes</option>
+                    <option value="name_asc">Nombre (A-Z)</option>
+                    <option value="status_active">Activos primero</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Grid de Scripts -->
+        <div id="scriptsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
+            <!-- Las tarjetas se generan aquí con JS -->
+        </div>
+
+    </main>
+
+    <!-- Modal de Detalle (CORREGIDO Y UNIFICADO) -->
+    <div id="scriptModal" class="fixed inset-0 z-[100] hidden opacity-0 transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 dark:bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+        
+        <!-- Contenido Modal -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[85vh] bg-white dark:bg-cardbg border border-gray-200 dark:border-slate-700 rounded-xl shadow-2xl flex flex-col overflow-hidden transform scale-95 transition-transform duration-300" id="modalContent">
+        
+            <!-- Header Modal -->
+            <div class="p-6 border-b border-gray-200 dark:border-slate-700 flex justify-between items-start bg-gradient-to-r from-white to-transparent dark:from-cardbg dark:to-transparent">
+                <div class="flex gap-4">
+                    <div id="m_icon" class="w-12 h-12 rounded-lg bg-primary/20 text-primary flex items-center justify-center p-3"></div>
+                    <div>
+                        <h2 id="m_title" class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Nombre Script</h2>
+                        <div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+                            <span id="m_version"></span>
+                            <span class="w-1 h-1 bg-slate-500 rounded-full"></span>
+                            <span id="m_date"></span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors p-1">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Body Modal (Scrollable) -->
+            <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                <p id="m_description" class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed"></p>
+
+                <!-- Grid de Info -->
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="bg-gray-100 dark:bg-slate-900/50 p-4 rounded-lg border border-gray-200 dark:border-slate-700/50">
+                        <h3 class="text-xs uppercase text-slate-500 font-bold mb-2">Dependencias</h3>
+                        <ul id="m_dependencies" class="space-y-1"></ul>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-slate-900/50 p-4 rounded-lg border border-gray-200 dark:border-slate-700/50">
+                        <h3 class="text-xs uppercase text-slate-500 font-bold mb-2">Tags</h3>
+                        <div id="m_tags" class="flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+
+                <!-- Secciones de Código -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-semibold text-slate-800 dark:text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="terminal" class="w-4 h-4"></i> Instalación
+                        </h3>
+                        <div class="bg-gray-100 dark:bg-slate-900 rounded-lg p-4 border border-gray-200 dark:border-slate-700 font-mono text-sm text-blue-600 dark:text-blue-300 relative group">
+                            <code id="m_install_cmd"></code>
+                            <button onclick="copyToClipboard('m_install_cmd')" class="absolute right-2 top-2 bg-gray-300 dark:bg-slate-700 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary text-slate-700 dark:text-white">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ===== SUBIDA DE ARCHIVO (solo para Text2Image OCR) ===== -->
+                    <div id="m_file_upload_section" class="hidden">
+                        <h3 class="text-sm font-semibold text-slate-800 dark:text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="upload" class="w-4 h-4"></i> Adjuntar Archivo
+                        </h3>
+                        <div class="bg-gray-100 dark:bg-slate-900 rounded-lg p-4 border border-dashed border-gray-300 dark:border-slate-600 hover:border-primary transition-colors">
+                            <input type="file" id="m_file_input" accept=".pdf,.jpg,.jpeg,.png,.webp" class="hidden">
+                            <div onclick="document.getElementById('m_file_input').click()" class="cursor-pointer flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">
+                                <i data-lucide="file-up" class="w-5 h-5"></i>
+                                <span id="m_file_label">Haz clic para seleccionar un archivo (PDF, JPG, PNG)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== CONSOLA DE EJECUCIÓN (NUEVO) ===== -->
+                    <div id="m_console_section" class="hidden">
+                        <h3 class="text-sm font-semibold text-slate-800 dark:text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="terminal" class="w-4 h-4"></i> Consola de Ejecución
+                        </h3>
+                        <div id="m_console" class="bg-gray-100 dark:bg-[#0c0c0c] rounded-lg border border-gray-200 dark:border-slate-700 p-4 font-mono text-sm min-h-[200px] max-h-[400px] overflow-y-auto custom-scrollbar relative">
+                            <!-- Línea de prompt con ID para fácil selección -->
+                            <div id="m_console_prompt" class="flex items-center gap-1 mb-2 text-green-600 dark:text-green-400">
+                                <span>user@host</span><span class="text-slate-500">:</span><span class="text-blue-600 dark:text-blue-400">~/scripts</span><span class="text-slate-500">$</span>
+                            </div>
+                            <!-- Salida se inyecta aquí -->
+                            <pre id="m_console_output" class="whitespace-pre-wrap text-slate-600 dark:text-slate-300"></pre>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="p-6 border-t border-gray-200 dark:border-slate-700 bg-white dark:bg-cardbg flex justify-end gap-3">
+                <a id="m_github_link" href="#" target="_blank" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:text-white dark:hover:text-white hover:border-primary transition-all flex items-center gap-2 hidden">
+                    <i data-lucide="github" class="w-4 h-4"></i> Ver Código
+                </a>
+                <!-- Botón Ejecutar ahora llama a executeScript -->
+                <button id="m_run_btn" onclick="executeScript()" class="px-6 py-2 rounded-lg bg-primary hover:bg-blue-600 text-white font-medium transition-all shadow-[0_0_15px_-3px_rgba(59,130,246,0.4)] flex items-center gap-2">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i> Ejecutar Script
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-[110] flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Scripts de Lógica -->
+    <script src="static/js/app.js"></script>
+</body>
+</html>
