@@ -113,7 +113,7 @@ python scripts/server.py
 ```
 
 El servidor se ejecuta en `http://127.0.0.1:5000`.
-<img width="1278" height="1117" alt="image" src="https://github.com/user-attachments/assets/0c70c79c-4172-422a-b61d-4c1554f0ab61" />
+<img width="1270" height="1161" alt="image" src="https://github.com/user-attachments/assets/20608346-def6-40f2-adc1-a13b0cd2a1f8" />
 
 
 ### Añadir un nuevo script
